@@ -26,6 +26,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (!hasVerifiedToken) {
+    // console.log("Redirecting to login page");
     const searchParams = new URLSearchParams(nextUrl.searchParams);
     searchParams.set("next", nextUrl.pathname);
 
@@ -34,10 +35,11 @@ export async function middleware(request: NextRequest) {
     );
     response.cookies.delete("token");
 
+    // console.log(response);
     return response;
   }
 
   return NextResponse.next();
 }
 
-export const config = { matcher: ["/:path*"] };
+export const config = { matcher: ["/dmac/:path*", "/login"] };
